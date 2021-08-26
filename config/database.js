@@ -1,17 +1,12 @@
-const mysql = require('mysql2');
-
 require('dotenv').config();
 
-const DB_CONNECTION = mysql.createPool({ 
-    host:     process.env.DB_HOST,
-    user:     process.env.DB_USERNAME,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE
-});
+const mongoose = require('mongoose');
 
-// DB_CONNECTION.connect(function (error) {
-//     if (error) throw error;
-//     console.log('Database Connected Successfully!!!');
-// })
+mongoose.connect(`mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_DATABASE}`, 
+{ useNewUrlParser: true } , (err)=> {
 
-module.exports = DB_CONNECTION.promise();
+    if (err) throw err
+
+    console.log('Database Connected Successfully...')
+})
+

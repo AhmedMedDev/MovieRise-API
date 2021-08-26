@@ -12,6 +12,8 @@ const port = process.env.PORT || 5000;
 
 const app = express();
 
+const DB_CONNECTION = require('./config/database.js')
+
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(bodyParser.json());

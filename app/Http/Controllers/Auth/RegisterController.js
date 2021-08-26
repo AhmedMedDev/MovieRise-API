@@ -22,10 +22,10 @@ class RegisterController
 
             let user = await AuthServiceProvider.register(req.body);
 
-            req.body.userID = user[0].insertId
+            req.body.userID = user._id
             
             // Inject Observer 
-            // RegisterObserver.registered(req.body)
+            RegisterObserver.registered(req.body)
 
             return res.status(200).json({
                 success : true,

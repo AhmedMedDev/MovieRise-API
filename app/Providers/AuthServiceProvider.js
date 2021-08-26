@@ -37,9 +37,6 @@ class AuthServiceProvider
     {
         let {name, email, password, img} = data
 
-        // Insert default img if img dosen't exist
-        img = (!img) ? 'uploads/users/avatar/default.png' : img
-
         // Generate Verification Code
         let verify_code = Math.floor(Math.random() * 999999) + 100000;
 
@@ -47,7 +44,7 @@ class AuthServiceProvider
         password = await bcrypt.hash(password, 10)
 
         // Create a new user
-        return User.create(name, email, password, img, verify_code)
+        return User.create({name, email, password, img, verify_code})
     }
 }
 

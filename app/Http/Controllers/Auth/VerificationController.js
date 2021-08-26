@@ -17,12 +17,14 @@ class VerificationController
     {
         try {
 
-            let user = await User.getByVerificationCode(req.params.verification_code)
+            let user = await User.find({
+                verify_code : req.params.verification_code
+            })
 
-            if (!isNaN(user[0])) 
-                return ResponseServiceProvider.notFoundResource(res)
+            if (!user[0]) return ResponseServiceProvider
+                    .notFoundResource(res)
             
-            if (user[0][0].email_verified_at != null) {
+            if (user[0].email_verified_at != null) {
                 
                 return res.status(200).json({
                     success : true,
@@ -30,7 +32,12 @@ class VerificationController
                 })
             }
 
-            let activate = await User.activateEmailVerification(user[0][0].id)
+            let activate = await User.updateOne(
+                {_id: user[0].id},
+                {$set: {
+                    email_verified_at : new Date()
+                }}
+            )
 
             return res.status(200).json({
                 success : true,

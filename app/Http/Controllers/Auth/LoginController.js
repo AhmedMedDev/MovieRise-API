@@ -18,7 +18,7 @@ class LoginController
     async login (req, res) 
     {
         // Check Credentials
-        let result = await AuthServiceProvider.attemp(req.body)
+        let result = await AuthServiceProvider.attempt(req.body)
 
         if (!result.auth) return ResponseServiceProvider.unauthorized(res)
 

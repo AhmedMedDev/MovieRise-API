@@ -10,21 +10,21 @@ class AuthServiceProvider
      * @param {*} data 
      * @returns 
      */
-    static async attemp (data)
+    static async attempt (data)
     {
         // Make sure Email is correct 
         let {email, password} = data
 
-        let user = await User.getByEmail(email)
+        let user = await User.find({email})
 
-        if (!isNaN(user[0])) return {auth: false}
+        if (!user[0]) return { auth: false }
 
         // Make sure password is correct 
-        let isMatch = await bcrypt.compare(password, user[0][0].password);
+        let isMatch = await bcrypt.compare(password, user[0].password);
 
-        if (!isMatch) return {auth: false}
+        if (!isMatch) return { auth: false }
 
-        return {auth: true, user: user[0][0]}
+        return {auth: true, user: user[0]}
     }
 
     /**

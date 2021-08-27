@@ -1,6 +1,7 @@
 const ResetPassword = require("../../../Models/ResetPassword");
 const User = require("../../../Models/User");
 const ResetPassObserver = require("../../../Observers/ResetPassObserver");
+const bcrypt = require('bcryptjs')
 const ResponseServiceProvider = require("../../../Providers/ResponseServiceProvider");
 
 
@@ -18,18 +19,24 @@ class ResetPassController
         try {
             
             // Make sure this email is valid
-            let user = await User.getByEmail(req.body.email) 
+            let user = await User.find({
+                email: req.body.email
+            }) 
 
-            if (!isNaN(user[0]))
+            if (!user[0])
                 return ResponseServiceProvider.notFoundResource(res)
     
             // Create Pincode 
             let pincode = Math.floor(Math.random() * 999999) + 100000;
     
-            ResetPassword.create({user_id : user[0][0].id, pincode})
+            // Store pincode 
+            ResetPassword.create({
+                email: user[0].email,
+                pincode
+            })
 
             // Inject Observer 
-            ResetPassObserver.preResetPassword({user:user[0][0], pincode})
+            ResetPassObserver.preResetPassword({user, pincode})
 
             return res.status(200).json({
                 success : true,
@@ -53,9 +60,11 @@ class ResetPassController
         try {
 
             // Make sure this pincode is valid
-            let resetpassRow = await ResetPassword.getByPincode(req.body.pincode)
+            let resetpassRow = await ResetPassword.find({
+                pincode: req.body.pincode
+            })
 
-            if (!isNaN(resetpassRow[0])) 
+            if (!resetpassRow[0]) 
                 return ResponseServiceProvider.notFoundResource(res)
 
             return res.status(200).json({
@@ -81,17 +90,27 @@ class ResetPassController
     {
         try {
 
-            // Check Pincode 
-            let resetpassRow = await ResetPassword.getByPincode(req.body.pincode)
+            // Make sure this pincode is valid
+            let resetpassRow = await ResetPassword.find({
+                pincode: req.body.pincode
+            })
 
-            if (!isNaN(resetpassRow[0])) 
+            if (!resetpassRow[0]) 
                 return ResponseServiceProvider.notFoundResource(res)
 
-            // Change password 
-            User.updatePassword(resetpassRow[0][0].user_id, req.body)
+
+            // Hash Password
+            const password = await bcrypt.hash(req.body.newPassword, 10)
+
+            // Change password  
+            User.updateOne(
+                { email: resetpassRow[0].email},
+                { $set: { password }})
 
             // Inject Observer 
-            ResetPassObserver.resetPassword(resetpassRow[0][0].user_id)
+            ResetPassObserver.resetPassword({
+                email: resetpassRow[0].email
+            })
 
             return res.status(200).json({success : true})
 

@@ -6,14 +6,14 @@ class ResetPassObserver
 {
     preResetPassword (data) 
     {
-        let resetPasswordEmail =  new ResetPasswordEmail({user:data.user, pincode: data.pincode})
+        let resetPasswordEmail =  new ResetPasswordEmail({user:data.user[0], pincode: data.pincode})
 
         resetPasswordEmail.send();
     }
 
-    resetPassword (data) 
+    async resetPassword (data) 
     {
-        ResetPassword.delete(data)
+       let response = await ResetPassword.deleteMany({email: data.email})
     }
 }
 

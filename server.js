@@ -45,12 +45,6 @@ app.get('/', (req, res) => res.send('Hello World'));
 
 app.use('/api/v1/auth',  require('./routes/api/auth.js'));
 
-/**
- * System Routes
- */
-
-app.use('/api/v1/systems',  require('./routes/api/system.js'));
-
 
 
 // Return to handling style

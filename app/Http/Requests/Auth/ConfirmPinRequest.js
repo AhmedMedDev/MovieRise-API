@@ -6,8 +6,10 @@ class ConfirmPinRequest
         return [
             // pincode roles
             body('pincode')
+            .isNumeric()
+            .withMessage('must be Numeric')
             .notEmpty()
-            .withMessage('must be not empty')
+            .withMessage('must be not empty'),
         ]
     }
 }

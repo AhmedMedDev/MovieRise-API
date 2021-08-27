@@ -47,7 +47,7 @@ class ResponseServiceProvider
     }
 
     /**
-     * unauthorized Response 
+     * Cached Response 
      * 
      * @param {*} res 
      * @param {*} err 

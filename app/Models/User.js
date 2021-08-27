@@ -21,6 +21,11 @@ const userSchema = new mongoose.Schema({
         required: false,
         default: "uploads/users/avatar/default.png"
     },
+    isAdmin: {
+        type: Boolean,
+        required: false,
+        default: false
+    },
     verify_code: {
         type: String,
         required: true

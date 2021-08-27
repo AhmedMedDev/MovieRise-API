@@ -13,7 +13,7 @@ class ResetPassObserver
 
     async resetPassword (data) 
     {
-       let response = await ResetPassword.deleteMany({email: data.email})
+       await ResetPassword.deleteMany({email: data.email})
     }
 }
 

@@ -103,7 +103,7 @@ class ResetPassController
             const password = await bcrypt.hash(req.body.newPassword, 10)
 
             // Change password  
-            User.updateOne(
+            await User.updateOne(
                 { email: resetpassRow[0].email},
                 { $set: { password }})
 

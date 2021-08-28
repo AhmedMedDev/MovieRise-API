@@ -49,7 +49,7 @@ class MovieController
             // Inject Observer 
             MovieObserver.created();
 
-            return res.status(200).json({
+            return res.status(201).json({
                 success : true,
                 payload : movie
             })
@@ -107,7 +107,7 @@ class MovieController
                 genres:    req.body.genres,
               }},
             );
-            
+
             if (!movie.acknowledged.modifiedCount) 
                 return ResponseServiceProvider.notFoundResource(res)
 

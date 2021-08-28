@@ -6,15 +6,16 @@ const router = express.Router();
 const validate = require('../../app/Http/Middleware/validate.js')
 
 const MovieController = require('../../app/Http/Controllers/API/MovieController.js');
+const MovieRequest = require('../../app/Http/Requests/MovieRequest.js');
 
 
-router.get('/',MovieController.index);
+router.get('/', MovieController.index);
 
-router.post('/',  MovieController.store);
+router.post('/', validate(MovieRequest), MovieController.store);
 
-router.get('/:id',MovieController.show);
+router.get('/:id', MovieController.show);
 
-router.put('/:id', MovieController.update);
+router.put('/:id', validate(MovieRequest), MovieController.update);
 
 router.delete('/:id',MovieController.destroy);
 

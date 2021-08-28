@@ -1,9 +1,9 @@
 const ResponseServiceProvider = require("../../../Providers/ResponseServiceProvider");
-const Movie = require("../../../Models/Movie");
+const Review = require("../../../Models/Review");
 const Cache = require("../../../../config/cache");
-const MovieObserver = require("../../../Observers/MovieObserver");
+const ReviewObserver = require("../../../Observers/ReviewObserver");
 
-class MovieController
+class ReviewController
 {
     /**
      * Display a listing of the resource.
@@ -15,18 +15,18 @@ class MovieController
     {
         try {
             // Check cache
-            if (Cache.has('movies'))
-                return ResponseServiceProvider.cache(res, 'movies')
+            if (Cache.has('reviews'))
+                return ResponseServiceProvider.cache(res, 'reviews')
 
             // Get All resource
-            let movies = await Movie.find();
+            let reviews = await Review.find();
             
             // Cache response
-            Cache.set("movies", movies)
+            Cache.set("reviews", reviews)
 
             return res.status(200).json({
                 success : true,
-                payload : movies
+                payload : reviews
             })
 
         } catch (error) {
@@ -44,23 +44,14 @@ class MovieController
     {
         try {
             
-            let movie = await Movie.create({
-                name:       req.body.name,
-                synpsis:    req.body.synpsis,
-                rate:       req.body.rate,
-                trail:      req.body.trail,
-                poster:     req.body.poster,
-                available:  req.body.available,
-                genres:     req.body.genres,
-                reviews:    req.body.reviews,
-            });
+            let review = await Review.create(req.body);
 
             // Inject Observer 
-            MovieObserver.created();
+            ReviewObserver.created();
 
             return res.status(201).json({
                 success : true,
-                payload : movie
+                payload : review
             })
 
         } catch (error) {
@@ -79,14 +70,14 @@ class MovieController
     {
         try {
             
-            let movie = await Movie.find({_id: req.params.id})
+            let review = await Review.find({_id: req.params.id})
 
-            if (!movie[0]) 
+            if (!review[0]) 
                 return ResponseServiceProvider.notFoundResource(res)
 
             return res.status(200).json({
                 success : true,
-                payload : movie
+                payload : review
             })
 
         } catch (error) {
@@ -104,7 +95,7 @@ class MovieController
     {
         try {
 
-            let movie = await Movie.updateOne(
+            let review = await Review.updateOne(
               {_id: req.params.id},
               {$set: {
                 name:      req.body.name,
@@ -117,18 +108,18 @@ class MovieController
               }},
             );
 
-            if (!movie.acknowledged.modifiedCount) 
+            if (!review.acknowledged.modifiedCount) 
                 return ResponseServiceProvider.notFoundResource(res)
 
             // Inject Observer 
-            MovieObserver.updated();
+            ReviewObserver.updated();
 
             return res.status(200).json({
               success : true,
               requests : {
                 type: 'GET',
                 url: process.env.APP_URL +
-                     '/api/v1/movies/' +
+                     '/api/v1/reviews/' +
                      req.params.id
               }
           })
@@ -148,13 +139,13 @@ class MovieController
     {
         try {
             
-            let movie = await Movie.deleteOne({_id: req.params.id});
+            let review = await Review.deleteOne({_id: req.params.id});
 
-            if (!movie.acknowledged) 
+            if (!review.acknowledged) 
                 return ResponseServiceProvider.notFoundResource(res)
 
             // Inject Observer 
-            MovieObserver.deleted();
+            ReviewObserver.deleted();
 
             return res.status(200).json({success : true})
 
@@ -164,4 +155,4 @@ class MovieController
     }
 }
 
-module.exports = new MovieController;
+module.exports = new ReviewController;

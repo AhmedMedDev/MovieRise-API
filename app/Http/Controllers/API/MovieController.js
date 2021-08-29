@@ -30,7 +30,8 @@ class MovieController
             })
 
         } catch (error) {
-            return ResponseServiceProvider.serverError(res, error)
+            return ResponseServiceProvider
+                    .serverError(res, error)
         }
     }
  
@@ -43,7 +44,6 @@ class MovieController
     async store (req, res)
     {
         try {
-            
             let movie = await Movie.create(req.body);
 
             // Inject Observer 
@@ -70,7 +70,6 @@ class MovieController
     async show (req, res)
     {
         try {
-            
             let movie = await Movie.find({_id: req.params.id})
 
             return res.status(200).json({
@@ -80,7 +79,7 @@ class MovieController
 
         } catch (error) {
             return ResponseServiceProvider
-                .badRequest(res, error.message)
+                    .badRequest(res, error.message)
         }
     }
 
@@ -93,7 +92,6 @@ class MovieController
     async update (req, res)
     {
         try {
-
             await Movie.updateOne(
               {_id: req.params.id},
               {$set: req.body},
@@ -114,7 +112,7 @@ class MovieController
 
         } catch (error) {
             return ResponseServiceProvider
-                .badRequest(res, error.message)
+                    .badRequest(res, error.message)
         }
     }
 
@@ -127,7 +125,6 @@ class MovieController
     async destroy (req, res)
     {
         try {
-            
             await Movie.deleteOne({_id: req.params.id});
 
             // Inject Observer 
@@ -137,7 +134,7 @@ class MovieController
 
         } catch (error) {
             return ResponseServiceProvider
-                .badRequest(res, error.message)
+                    .badRequest(res, error.message)
         }
     }
 }

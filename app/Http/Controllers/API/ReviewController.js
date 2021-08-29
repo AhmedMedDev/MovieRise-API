@@ -30,7 +30,8 @@ class ReviewController
             })
 
         } catch (error) {
-            return ResponseServiceProvider.serverError(res, error)
+            return ResponseServiceProvider
+                    .serverError(res, error)
         }
     }
  
@@ -43,7 +44,6 @@ class ReviewController
     async store (req, res)
     {
         try {
-            
             let review = await Review.create(req.body);
 
             // Inject Observer 
@@ -55,7 +55,8 @@ class ReviewController
             })
 
         } catch (error) {
-            return ResponseServiceProvider.serverError(res, error)
+            return ResponseServiceProvider
+                    .serverError(res, error)
         }
 
     }
@@ -69,11 +70,7 @@ class ReviewController
     async show (req, res)
     {
         try {
-            
             let review = await Review.find({_id: req.params.id})
-
-            if (!review[0]) 
-                return ResponseServiceProvider.notFoundResource(res)
 
             return res.status(200).json({
                 success : true,
@@ -81,7 +78,8 @@ class ReviewController
             })
 
         } catch (error) {
-            return ResponseServiceProvider.serverError(res, error)
+            return ResponseServiceProvider
+                    .badRequest(res, error.message)
         }
     }
 
@@ -94,22 +92,10 @@ class ReviewController
     async update (req, res)
     {
         try {
-
-            let review = await Review.updateOne(
+            await Review.updateOne(
               {_id: req.params.id},
-              {$set: {
-                name:      req.body.name,
-                synpsis:   req.body.synpsis,
-                rate:      req.body.rate,
-                trail:     req.body.trail,
-                poster:    req.body.poster,
-                available: req.body.available,
-                genres:    req.body.genres,
-              }},
+              {$set: req.body},
             );
-
-            if (!review.acknowledged.modifiedCount) 
-                return ResponseServiceProvider.notFoundResource(res)
 
             // Inject Observer 
             ReviewObserver.updated();
@@ -125,7 +111,8 @@ class ReviewController
           })
 
         } catch (error) {
-            return ResponseServiceProvider.serverError(res, error)
+            return ResponseServiceProvider
+                    .badRequest(res, error.message)
         }
     }
 
@@ -138,11 +125,7 @@ class ReviewController
     async destroy (req, res)
     {
         try {
-            
-            let review = await Review.deleteOne({_id: req.params.id});
-
-            if (!review.acknowledged) 
-                return ResponseServiceProvider.notFoundResource(res)
+            await Review.deleteOne({_id: req.params.id});
 
             // Inject Observer 
             ReviewObserver.deleted();
@@ -150,7 +133,8 @@ class ReviewController
             return res.status(200).json({success : true})
 
         } catch (error) {
-            return ResponseServiceProvider.serverError(res, error)
+            return ResponseServiceProvider
+                    .badRequest(res, error.message)
         }
     }
 }

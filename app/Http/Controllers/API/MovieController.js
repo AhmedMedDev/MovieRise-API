@@ -19,7 +19,7 @@ class MovieController
                 return ResponseServiceProvider.cache(res, 'movies')
 
             // Get All resource
-            let movies = await Movie.find();
+            let movies = await Movie.find().populate('reviews')
             
             // Cache response
             Cache.set("movies", movies)

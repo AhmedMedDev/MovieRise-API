@@ -44,16 +44,7 @@ class MovieController
     {
         try {
             
-            let movie = await Movie.create({
-                name:       req.body.name,
-                synpsis:    req.body.synpsis,
-                rate:       req.body.rate,
-                trail:      req.body.trail,
-                poster:     req.body.poster,
-                available:  req.body.available,
-                genres:     req.body.genres,
-                reviews:    req.body.reviews,
-            });
+            let movie = await Movie.create(req.body);
 
             // Inject Observer 
             MovieObserver.created();
@@ -64,7 +55,8 @@ class MovieController
             })
 
         } catch (error) {
-            return ResponseServiceProvider.serverError(res, error)
+            return ResponseServiceProvider
+                    .serverError(res, error)
         }
 
     }
@@ -81,16 +73,14 @@ class MovieController
             
             let movie = await Movie.find({_id: req.params.id})
 
-            if (!movie[0]) 
-                return ResponseServiceProvider.notFoundResource(res)
-
             return res.status(200).json({
                 success : true,
                 payload : movie
             })
 
         } catch (error) {
-            return ResponseServiceProvider.serverError(res, error)
+            return ResponseServiceProvider
+                .badRequest(res, error.message)
         }
     }
 
@@ -104,21 +94,10 @@ class MovieController
     {
         try {
 
-            let movie = await Movie.updateOne(
+            await Movie.updateOne(
               {_id: req.params.id},
-              {$set: {
-                name:      req.body.name,
-                synpsis:   req.body.synpsis,
-                rate:      req.body.rate,
-                trail:     req.body.trail,
-                poster:    req.body.poster,
-                available: req.body.available,
-                genres:    req.body.genres,
-              }},
+              {$set: req.body},
             );
-
-            if (!movie.acknowledged.modifiedCount) 
-                return ResponseServiceProvider.notFoundResource(res)
 
             // Inject Observer 
             MovieObserver.updated();
@@ -134,7 +113,8 @@ class MovieController
           })
 
         } catch (error) {
-            return ResponseServiceProvider.serverError(res, error)
+            return ResponseServiceProvider
+                .badRequest(res, error.message)
         }
     }
 
@@ -148,10 +128,7 @@ class MovieController
     {
         try {
             
-            let movie = await Movie.deleteOne({_id: req.params.id});
-
-            if (!movie.acknowledged) 
-                return ResponseServiceProvider.notFoundResource(res)
+            await Movie.deleteOne({_id: req.params.id});
 
             // Inject Observer 
             MovieObserver.deleted();
@@ -159,7 +136,8 @@ class MovieController
             return res.status(200).json({success : true})
 
         } catch (error) {
-            return ResponseServiceProvider.serverError(res, error)
+            return ResponseServiceProvider
+                .badRequest(res, error.message)
         }
     }
 }

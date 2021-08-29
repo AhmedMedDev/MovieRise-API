@@ -20,15 +20,15 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: "uploads/users/avatar/default.png"
     },
-    isAdmin: {
+    isAdmin: {// Hidden
         type: Boolean,
         default: false
     },
-    verify_code: {
+    verify_code: {// Hidden
         type: String,
         required: true
     },
-    email_verified_at: {
+    email_verified_at: {// Hidden
         type: Date,
     }
 })

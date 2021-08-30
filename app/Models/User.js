@@ -20,16 +20,20 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: "uploads/users/avatar/default.png"
     },
-    isAdmin: {// Hidden
+    isAdmin: {// Hidden at register
         type: Boolean,
         default: false
     },
-    verify_code: {// Hidden
+    verify_code: {// Hidden at register
         type: String,
         required: true
     },
-    email_verified_at: {// Hidden
+    email_verified_at: {// Hidden at register
         type: Date,
+    },
+    favorites: {// Hidden at register
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: 'Movie',
     }
 })
 

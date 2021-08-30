@@ -107,8 +107,7 @@ class MovieController
                 url: process.env.APP_URL +
                      '/api/v1/movies/' +
                      req.params.id
-              }
-          })
+            }})
 
         } catch (error) {
             return ResponseServiceProvider

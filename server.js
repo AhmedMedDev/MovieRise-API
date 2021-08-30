@@ -51,11 +51,17 @@ app.use('/api/v1/auth',  require('./routes/api/auth.js'));
 
  app.use('/api/v1/movies',  require('./routes/api/movie.js'));
 
- /**
+/**
  * Review Routes
  */
 
   app.use('/api/v1/reviews',  require('./routes/api/review.js'));
+
+/**
+ * Review Routes
+ */
+
+  app.use('/api/v1/favorite/movies',  require('./routes/api/favoriteMovies.js'));
 
 
 // Return to handling style

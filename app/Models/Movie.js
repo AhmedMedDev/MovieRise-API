@@ -10,7 +10,7 @@ const movieSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    rate: {
+    rate: { // Turn into Dynamic
         type: Number,
         required: true,
         min: 1,
@@ -26,7 +26,7 @@ const movieSchema = new mongoose.Schema({
         required: true,
         max: 150
     },
-    available: {
+    available: { // Comming Soon
         type: Boolean,
         default: false
     },
@@ -34,12 +34,24 @@ const movieSchema = new mongoose.Schema({
         type: Array,
         required: true
     },
+    header: { // Landing Page movies
+        type: Boolean,
+        default: false
+    },
+    runtime: {
+        type: String,
+        required: true,
+    },
     reviews: {
         type: [mongoose.Schema.Types.ObjectId],
         ref: 'Review',
         default: []
     }
 })
-
+/**
+ * On Delete Movie 
+ * - - > Cascade Review
+ * - - > Cascade userFavs
+ */
 
 module.exports = mongoose.model('Movie', movieSchema , 'movies')

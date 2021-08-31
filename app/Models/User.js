@@ -19,19 +19,19 @@ const userSchema = new mongoose.Schema({
     img: {
         type: String,
         default: "uploads/users/avatar/default.png"
-    },
-    isAdmin: {// Hidden at register
+    },// Hidden at register
+    isAdmin: {
         type: Boolean,
         default: false
-    },
-    verify_code: {// Hidden at register
+    },// Hidden at register
+    verify_code: {
         type: String,
         required: true
-    },
-    email_verified_at: {// Hidden at register
+    },// Hidden at register
+    email_verified_at: {
         type: Date,
-    },
-    favorites: {// Hidden at register
+    },// Hidden at register
+    favorites: {
         type: [mongoose.Schema.Types.ObjectId],
         ref: 'Movie',
     }

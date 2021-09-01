@@ -15,9 +15,9 @@ class ReviewController
     {
         try {
             // Check cache
-            // if (Cache.has('reviews'))
-            //     return ResponseServiceProvider
-            //                     .cache(res, 'reviews')
+            if (Cache.has('reviews'))
+                return ResponseServiceProvider
+                                .cache(res, 'reviews')
 
             // Get All resource
             let reviews = await Review.find()

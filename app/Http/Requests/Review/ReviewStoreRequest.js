@@ -1,6 +1,6 @@
 const { body } = require('express-validator');
 
-class ReviewRequest
+class ReviewStoreRequest
 {
     static roles () {
         return [
@@ -16,8 +16,20 @@ class ReviewRequest
             .withMessage('must be not Empty')
             .isNumeric()
             .withMessage('must be Numeric'),
+            // movie roles
+            body('movie')
+            .notEmpty()
+            .withMessage('must be not Empty')
+            .isString()
+            .withMessage('must be String'),
+            // user roles
+            body('user')
+            .notEmpty()
+            .withMessage('must be not Empty')
+            .isString()
+            .withMessage('must be String'),
         ]
     }
 }
 
-module.exports = ReviewRequest.roles()
+module.exports = ReviewStoreRequest.roles()

@@ -2,6 +2,7 @@ const ResponseServiceProvider = require("../../../Providers/ResponseServiceProvi
 const Movie = require("../../../Models/Movie");
 const Cache = require("../../../../config/cache");
 const MovieObserver = require("../../../Observers/MovieObserver");
+const MovieServiceProvider = require("../../../Providers/MovieServiceProvider");
 
 class MovieController
 {
@@ -16,10 +17,11 @@ class MovieController
         try {
             // Check cache
             if (Cache.has('movies'))
-                return ResponseServiceProvider.cache(res, 'movies')
+                return ResponseServiceProvider
+                            .cache(res, 'movies')
 
             // Get All resource
-            let movies = await Movie.find().populate('reviews')
+            let movies = await Movie.find()
             
             // Cache response
             Cache.set("movies", movies)
@@ -70,7 +72,8 @@ class MovieController
     async show (req, res)
     {
         try {
-            let movie = await Movie.find({_id: req.params.id})
+            let movie = await Movie
+                        .find({_id: req.params.id})
 
             return res.status(200).json({
                 success : true,
@@ -93,9 +96,8 @@ class MovieController
     {
         try {
             await Movie.updateOne(
-              {_id: req.params.id},
-              {$set: req.body},
-            );
+            {_id: req.params.id},
+            {$set: req.body});
 
             // Inject Observer 
             MovieObserver.updated();
@@ -124,6 +126,9 @@ class MovieController
     async destroy (req, res)
     {
         try {
+            // Movie Service Provider
+            MovieServiceProvider.destroy (req, res)
+
             await Movie.deleteOne({_id: req.params.id});
 
             // Inject Observer 

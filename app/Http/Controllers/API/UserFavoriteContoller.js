@@ -20,7 +20,6 @@ class UserFavoriteContoller
             .findById(req.payload.data.user_id)
             .select('favorites').populate('favorites')
 
-                    
             return res.status(200).json({
                 success : true,
                 payload : userfavorites
@@ -54,11 +53,10 @@ class UserFavoriteContoller
 
             // Save Changes
             await User.updateOne(
-                {_id: provider.user_id},
-                {$set: {
-                    favorites: provider.userFavs
-                }},
-            );
+            {_id: provider.user_id},
+            {$set: {
+                favorites: provider.userFavs
+            }});
 
             return res.status(201).json({success: true})
 
@@ -90,11 +88,10 @@ class UserFavoriteContoller
 
             // Save Changes
             await User.updateOne(
-                {_id: provider.user_id},
-                {$set: {
-                    favorites: provider.userFavs
-                }},
-            );
+            {_id: provider.user_id},
+            {$set: {
+                favorites: provider.userFavs
+            }});
 
             return res.status(200).json({success: true})
 

@@ -15,11 +15,13 @@ class ReviewController
     {
         try {
             // Check cache
-            if (Cache.has('reviews'))
-                return ResponseServiceProvider.cache(res, 'reviews')
+            // if (Cache.has('reviews'))
+            //     return ResponseServiceProvider
+            //                     .cache(res, 'reviews')
 
             // Get All resource
-            let reviews = await Review.find();
+            let reviews = await Review.find()
+                .populate('movie').populate('user')
             
             // Cache response
             Cache.set("reviews", reviews)
@@ -56,9 +58,8 @@ class ReviewController
 
         } catch (error) {
             return ResponseServiceProvider
-                    .serverError(res, error)
+                    .badRequest(res, error.message)
         }
-
     }
 
     /**
@@ -70,7 +71,9 @@ class ReviewController
     async show (req, res)
     {
         try {
-            let review = await Review.find({_id: req.params.id})
+            let review = await Review
+                .find({_id: req.params.id})
+                .populate('movie').populate('user')
 
             return res.status(200).json({
                 success : true,
@@ -94,8 +97,10 @@ class ReviewController
         try {
             await Review.updateOne(
               {_id: req.params.id},
-              {$set: req.body},
-            );
+              {$set: {
+                re_dec: req.body.re_dec,
+                re_rate: req.body.re_rate,
+              }});
 
             // Inject Observer 
             ReviewObserver.updated();
@@ -107,8 +112,8 @@ class ReviewController
                 url: process.env.APP_URL +
                      '/api/v1/reviews/' +
                      req.params.id
-              }
-          })
+                }
+            })
 
         } catch (error) {
             return ResponseServiceProvider

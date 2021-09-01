@@ -31,6 +31,8 @@ class MovieObserver
     deleted () 
     {
         Cache.del('movies')
+
+        Cache.del('reviews')
     }
 }
 

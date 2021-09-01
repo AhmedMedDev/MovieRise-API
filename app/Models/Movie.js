@@ -41,11 +41,6 @@ const movieSchema = new mongoose.Schema({
     runtime: {
         type: String,
         required: true,
-    },
-    reviews: {
-        type: [mongoose.Schema.Types.ObjectId],
-        ref: 'Review',
-        default: []
     }
 })
 /**

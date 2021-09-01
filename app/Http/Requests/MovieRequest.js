@@ -43,7 +43,17 @@ class MovieRequest
             // genre's elems roles
             body('genres.*')
             .isString()
+            .withMessage('must be String'),
+            // genre's elems roles
+            body('header')
+            .optional()
+            .isBoolean()
+            .withMessage('must be Boolean'),
+            // genre's elems roles
+            body('runtime')
+            .isString()
             .withMessage('must be String')
+            
         ]
     }
 }

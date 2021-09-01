@@ -19,23 +19,28 @@ const userSchema = new mongoose.Schema({
     img: {
         type: String,
         default: "uploads/users/avatar/default.png"
-    },// Hidden at register
+    },// Hidden at Create
     isAdmin: {
         type: Boolean,
         default: false
-    },// Hidden at register
+    },// Hidden at Create
     verify_code: {
         type: String,
         required: true
-    },// Hidden at register
+    },// Hidden at Create
     email_verified_at: {
         type: Date,
-    },// Hidden at register
+    },// Hidden at Create
     favorites: {
         type: [mongoose.Schema.Types.ObjectId],
         ref: 'Movie',
     }
 })
+
+/**
+ * On Delete User 
+ * - - > Set NULL Review
+ */
 
 userSchema.plugin(uniqueValidator);
 

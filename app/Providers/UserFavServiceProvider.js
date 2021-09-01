@@ -3,7 +3,7 @@ const ResponseServiceProvider = require("./ResponseServiceProvider")
 
 class UserFavServiceProvider
 {
-    async updateFavs (req, res)
+    static async updateFavs (req, res)
     {
         try {
             // Get User ID From Token
@@ -31,4 +31,4 @@ class UserFavServiceProvider
     }
 }
 
-module.exports = new UserFavServiceProvider
+module.exports = UserFavServiceProvider

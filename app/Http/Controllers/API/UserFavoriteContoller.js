@@ -15,12 +15,10 @@ class UserFavoriteContoller
     async index (req, res)
     {
         try {
-            const user_id = req.payload.data.user_id
-
+            // Get User Favs
             let userfavorites = await User
-                    .findById(user_id)
-                    .select('favorites')
-                    .populate('favorites')
+            .findById(req.payload.data.user_id)
+            .select('favorites').populate('favorites')
 
                     
             return res.status(200).json({
@@ -43,13 +41,13 @@ class UserFavoriteContoller
     async store (req, res)
     {
         try {
-            // Check if new recored is repeated or not
+            // Update Favs service provider 
             const provider = await UserFavServiceProvider.updateFavs (req, res)
             
             // Make sure that new recored is not repeated
-            if (!provider.isExist) 
+            if (provider.isExist) 
                 return ResponseServiceProvider
-                        .badRequest(res, "Item is already exist")
+                        .badRequest(res, "Item is't exist")
 
             // Push new fav to user's favs
             provider.userFavs.push(req.body.favorites)
@@ -82,7 +80,7 @@ class UserFavoriteContoller
             // Update Favs service provider 
             const provider = await UserFavServiceProvider.updateFavs (req, res)
             
-            // Make sure that new recored is not repeated
+            // Make sure that new recored is exist
             if (!provider.isExist) 
                 return ResponseServiceProvider
                         .badRequest(res, "Item is't exist")

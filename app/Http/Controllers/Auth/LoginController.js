@@ -25,7 +25,8 @@ class LoginController
         // Inject User data in payload
         let payload = {
             data: {
-                user_id : result.user.id
+                user_id : result.user.id,
+                isAdmin : result.user.isAdmin
             }
         }
 

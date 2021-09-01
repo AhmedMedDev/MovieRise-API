@@ -2,7 +2,7 @@ require('dotenv').config();
 
 const jwt = require('jsonwebtoken')
 
-class authenticateToken
+class AuthenticateToken
 {
     static handle(req, res, next) {
 
@@ -26,4 +26,4 @@ class authenticateToken
     }
 }
 
-module.exports = authenticateToken
+module.exports = AuthenticateToken

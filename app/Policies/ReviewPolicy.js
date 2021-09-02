@@ -13,7 +13,7 @@ class ReviewPolicy
         : ResponseServiceProvider.unauthorized(res)
     }
 
-    async destroy  (req, res, next)
+    async destroy (req, res, next)
     {
         const review = await Review
         .findById(req.params.id).select('user')

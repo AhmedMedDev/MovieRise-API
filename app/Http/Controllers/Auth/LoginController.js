@@ -22,6 +22,9 @@ class LoginController
 
         if (!result.auth) return ResponseServiceProvider.unauthorized(res)
 
+        // Delete Password from result
+        result.user.password = ''
+
         // Inject User data in payload
         let payload = {
             data: {

@@ -62,6 +62,21 @@ class ResponseServiceProvider
     }
 
     /**
+     * unauthenticated Response 
+     * 
+     * @param {*} res 
+     * @param {*} err 
+     * @returns 
+     */
+    static unauthenticated (res) 
+    {
+        return res.status(401).json({
+            success : false,
+            payload : "unauthenticated"
+        })
+    }
+
+    /**
      * Cached Response 
      * 
      * @param {*} res 

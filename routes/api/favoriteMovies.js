@@ -6,14 +6,14 @@ const router = express.Router();
 const validate = require('../../app/Http/Middleware/validate.js')
 
 const UserFavoriteContoller = require('../../app/Http/Controllers/API/UserFavoriteContoller.js');
-const authenticateToken = require('../../app/Http/Middleware/authenticateToken.js');
+const AuthenticateToken = require('../../app/Http/Middleware/AuthenticateToken.js');
 
 
-router.get('/', authenticateToken.handle, UserFavoriteContoller.index);
+router.get('/', AuthenticateToken.handle, UserFavoriteContoller.index);
 
-router.post('/', authenticateToken.handle, UserFavoriteContoller.store);
+router.post('/', AuthenticateToken.handle, UserFavoriteContoller.store);
 
-router.delete('/', authenticateToken.handle, UserFavoriteContoller.destroy);
+router.delete('/', AuthenticateToken.handle, UserFavoriteContoller.destroy);
 
 
 

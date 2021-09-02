@@ -22,12 +22,6 @@ class ReviewStoreRequest
             .withMessage('must be not Empty')
             .isString()
             .withMessage('must be String'),
-            // user roles
-            body('user')
-            .notEmpty()
-            .withMessage('must be not Empty')
-            .isString()
-            .withMessage('must be String'),
         ]
     }
 }

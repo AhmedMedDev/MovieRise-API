@@ -16,7 +16,7 @@ const reviewSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Movie',
         required: true,
-    },// Hidden at Update
+    },// Hidden at Create , Update
     user: { // On Delete Set NULL // On Update Cascade
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',

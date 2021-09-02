@@ -15,21 +15,17 @@ router.get('/',
 MovieController.index);
 
 router.post('/',
-AuthenticateToken.handle,
-IsAdmin.handle,
-validate(MovieRequest),
-MovieController.store);
+AuthenticateToken.handle, IsAdmin.handle,
+validate(MovieRequest), MovieController.store);
 
-router.get('/:id', 
-MovieController.show);
+router.get('/:id', MovieController.show);
 
 router.put('/:id', 
-AuthenticateToken.handle,
-IsAdmin.handle,
-validate(MovieRequest), 
-MovieController.update);
+AuthenticateToken.handle, IsAdmin.handle,
+validate(MovieRequest), MovieController.update);
 
 router.delete('/:id', 
+AuthenticateToken.handle, IsAdmin.handle,
 MovieController.destroy);
 
 

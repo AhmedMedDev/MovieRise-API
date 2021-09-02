@@ -1,6 +1,7 @@
 require('dotenv').config();
 
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const ResponseServiceProvider = require('../../Providers/ResponseServiceProvider');
 
 class AuthenticateToken
 {
@@ -18,10 +19,7 @@ class AuthenticateToken
             next()
     
         } catch (err) {
-            return res.status(401).json({
-                success: false,
-                payload: 'Unauthorized'
-            })
+            return ResponseServiceProvider.unauthenticated (res) 
         }
     }
 }

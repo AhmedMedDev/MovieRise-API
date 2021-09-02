@@ -2,6 +2,7 @@ const ResponseServiceProvider = require("../../../Providers/ResponseServiceProvi
 const Review = require("../../../Models/Review");
 const Cache = require("../../../../config/cache");
 const ReviewObserver = require("../../../Observers/ReviewObserver");
+const ReviewPolicy = require("../../../Policies/ReviewPolicy");
 
 class ReviewController
 {
@@ -46,6 +47,9 @@ class ReviewController
     async store (req, res)
     {
         try {
+            // Inject user id 
+            req.body.user = req.payload.data.user_id
+
             let review = await Review.create(req.body);
 
             // Inject Observer 
@@ -95,12 +99,18 @@ class ReviewController
     async update (req, res)
     {
         try {
+            // Update Permissions
+            const authorized = await ReviewPolicy.update (req)
+
+            if (!authorized) 
+                return ResponseServiceProvider.unauthorized(res)
+            
             await Review.updateOne(
-              {_id: req.params.id},
-              {$set: {
+            {_id: req.params.id},
+            {$set: {
                 re_dec: req.body.re_dec,
                 re_rate: req.body.re_rate,
-              }});
+            }});
 
             // Inject Observer 
             ReviewObserver.updated();
@@ -130,6 +140,12 @@ class ReviewController
     async destroy (req, res)
     {
         try {
+            // Destroy Permissions
+            const authorized = await ReviewPolicy.destroy (req)
+
+            if (!authorized) 
+                return ResponseServiceProvider.unauthorized(res)
+
             await Review.deleteOne({_id: req.params.id});
 
             // Inject Observer 

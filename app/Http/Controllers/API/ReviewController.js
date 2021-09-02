@@ -99,12 +99,6 @@ class ReviewController
     async update (req, res)
     {
         try {
-            // Update Permissions
-            const authorized = await ReviewPolicy.update (req)
-
-            if (!authorized) 
-                return ResponseServiceProvider.unauthorized(res)
-            
             await Review.updateOne(
             {_id: req.params.id},
             {$set: {
@@ -140,12 +134,6 @@ class ReviewController
     async destroy (req, res)
     {
         try {
-            // Destroy Permissions
-            const authorized = await ReviewPolicy.destroy (req)
-
-            if (!authorized) 
-                return ResponseServiceProvider.unauthorized(res)
-
             await Review.deleteOne({_id: req.params.id});
 
             // Inject Observer 

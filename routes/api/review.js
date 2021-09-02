@@ -8,6 +8,7 @@ const AuthenticateToken = require('../../app/Http/Middleware/AuthenticateToken.j
 const ReviewController = require('../../app/Http/Controllers/API/ReviewController.js');
 const ReviewStoreRequest = require('../../app/Http/Requests/Review/ReviewStoreRequest.js');
 const ReviewUpdateRequest = require('../../app/Http/Requests/Review/ReviewUpdateRequest.js');
+const ReviewPolicy = require('../../app/Policies/ReviewPolicy.js');
 
 
 router.get('/', ReviewController.index);
@@ -19,11 +20,11 @@ ReviewController.store);
 router.get('/:id', ReviewController.show);
 
 router.put('/:id', 
-AuthenticateToken.handle, validate(ReviewUpdateRequest), 
-ReviewController.update);
+AuthenticateToken.handle, ReviewPolicy.update,
+validate(ReviewUpdateRequest), ReviewController.update);
 
 router.delete('/:id', 
-AuthenticateToken.handle,
+AuthenticateToken.handle, ReviewPolicy.destroy,
 ReviewController.destroy);
 
 

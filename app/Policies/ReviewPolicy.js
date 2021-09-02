@@ -3,20 +3,24 @@ const ResponseServiceProvider = require("../Providers/ResponseServiceProvider")
 
 class ReviewPolicy
 {
-    async update (req)
+    async update (req, res, next)
     {
         const review = await Review
         .findById(req.params.id).select('user')
-    
-        return (review.user == req.payload.data.user_id)
+
+        return (review.user == req.payload.data.user_id) 
+        ? next()
+        : ResponseServiceProvider.unauthorized(res)
     }
 
-    async destroy (req)
+    async destroy  (req, res, next)
     {
         const review = await Review
         .findById(req.params.id).select('user')
     
-        return (review.user == req.payload.data.user_id)
+        return (review.user == req.payload.data.user_id) 
+        ? next()
+        : ResponseServiceProvider.unauthorized(res)    
     }
 }
 

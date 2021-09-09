@@ -19,7 +19,7 @@ const {
 const {
     RegisterRequest,
     LoginRequest,
-    PreRePaRequest,
+    CreatePincode,
     ConfirmPinRequest,
     ResetPassRequest
 }   = require('../../app/Http/Requests/Auth/');
@@ -35,7 +35,7 @@ router.get('/me', AuthenticateToken.handle, MeController.me)
 
 router.get('/emailVerification/:verification_code', VerificationController.emailVerification)
 
-router.post('/preResetPassword', validate(PreRePaRequest), ResetPassController.createPincode) 
+router.post('/createPincode', validate(CreatePincode), ResetPassController.createPincode) 
 
 router.post('/confirmPincode', validate(ConfirmPinRequest), ResetPassController.confirmPincode) 
 

@@ -1,6 +1,6 @@
 const { body } = require('express-validator');
 
-class PreRePaRequest
+class CreatePincode
 {
     static roles () {
         return [
@@ -12,4 +12,4 @@ class PreRePaRequest
     }
 }
 
-module.exports = PreRePaRequest.roles()
+module.exports = CreatePincode.roles()

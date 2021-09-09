@@ -61,7 +61,7 @@ class AuthServiceProvider
 
         if (isAdmin) 
             payload.data.role 
-            = process.env.ACCESS_TOKEN_SECRET
+            = process.env.ADMIN_ROLE
 
         return payload;
     }

@@ -3,9 +3,9 @@ class IsAdmin
 {
     static handle(req, res, next) {
 
-        const isAdmin = req.payload.data.isAdmin
+        const role = req.payload.data.role
 
-        return (isAdmin)
+        return (role == process.env.ADMIN_ROLE)
         ? next()
         : res.status(401).json({
             success: false,

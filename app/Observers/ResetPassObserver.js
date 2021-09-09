@@ -4,9 +4,9 @@ const ResetPassword = require("../Models/ResetPassword");
 
 class ResetPassObserver
 {
-    preResetPassword (data) 
+    createPincode (data) 
     {
-        let resetPasswordEmail =  new ResetPasswordEmail({user:data.user[0], pincode: data.pincode})
+        let resetPasswordEmail =  new ResetPasswordEmail({user:data.user, pincode: data.pincode})
 
         resetPasswordEmail.send();
     }

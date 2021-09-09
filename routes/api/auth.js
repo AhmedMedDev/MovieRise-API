@@ -35,7 +35,7 @@ router.get('/me', AuthenticateToken.handle, MeController.me)
 
 router.get('/emailVerification/:verification_code', VerificationController.emailVerification)
 
-router.post('/preResetPassword', validate(PreRePaRequest), ResetPassController.preResetPassword) 
+router.post('/preResetPassword', validate(PreRePaRequest), ResetPassController.createPincode) 
 
 router.post('/confirmPincode', validate(ConfirmPinRequest), ResetPassController.confirmPincode) 
 

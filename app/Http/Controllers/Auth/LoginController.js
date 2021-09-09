@@ -18,25 +18,17 @@ class LoginController
     async login (req, res) 
     {
         // Check Credentials
-        let result = await AuthServiceProvider.attempt(req.body)
+        const result = await AuthServiceProvider.attempt(req.body)
 
         if (!result.auth) return ResponseServiceProvider.unauthorized(res)
 
-        // Delete Password from result
-        result.user.password = ''
+        // Generate Payload 
+        const payload = AuthServiceProvider.generatePayload (result)
 
-        // Inject User data in payload
-        let payload = {
-            data: {
-                user_id : result.user.id,
-                isAdmin : result.user.isAdmin
-            }
-        }
-
-        // Generate token 
+        // Generate Token 
         const accessToken = jwtServiceProvider.generateAccessToken(payload)
 
-        return jwtServiceProvider.respondWithToken(accessToken,result.user,res)
+        return jwtServiceProvider.respondWithToken(accessToken, result.user, res)
     }
 }
 

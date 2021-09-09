@@ -46,6 +46,25 @@ class AuthServiceProvider
         // Create a new user
         return User.create({name, email, password, img, verify_code})
     }
+
+    /**
+     * Inject User data in payload
+     * 
+     * @param {*} data 
+     * @returns 
+     */
+    static generatePayload (data)
+    {
+        const { isAdmin, id } = data.user
+
+        let payload = { data: { user_id: id } }
+
+        if (isAdmin) 
+            payload.data.role 
+            = process.env.ACCESS_TOKEN_SECRET
+
+        return payload;
+    }
 }
 
 module.exports = AuthServiceProvider

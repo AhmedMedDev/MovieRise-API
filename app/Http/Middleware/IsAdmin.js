@@ -1,3 +1,4 @@
+const ResponseServiceProvider = require("../../Providers/ResponseServiceProvider")
 
 class IsAdmin
 {
@@ -7,10 +8,7 @@ class IsAdmin
 
         return (role == process.env.ADMIN_ROLE)
         ? next()
-        : res.status(401).json({
-            success: false,
-            payload: 'Unauthorized'
-        })
+        : ResponseServiceProvider.unauthorized(res) 
     }
 }
 

@@ -43,25 +43,31 @@ app.get('/', (req, res) => res.send('Hello World'));
  * Auth Routes
  */
 
-app.use('/api/v1/auth',  require('./routes/api/auth.js'));
+app.use('/api/v1/auth', require('./routes/api/auth.js'));
 
 /**
  * Movie Routes
  */
 
-app.use('/api/v1/movies',  require('./routes/api/movie.js'));
+app.use('/api/v1/movies', require('./routes/api/movie.js'));
 
 /**
  * Review Routes
  */
 
-app.use('/api/v1/reviews',  require('./routes/api/review.js'));
+app.use('/api/v1/reviews', require('./routes/api/review.js'));
 
 /**
- * Movies favorite
+ * Movies favorite Routes
  */
 
-app.use('/api/v1/favorite/movies',  require('./routes/api/favoriteMovies.js'));
+app.use('/api/v1/favorite/movies', require('./routes/api/favoriteMovies.js'));
+
+/**
+ *  Specific Movies Routes
+ */
+
+app.use('/api/v1/specific/movies', require('./routes/api/specificMovies.js'));
 
 
 // Return to handling style

@@ -108,7 +108,7 @@ class SpecificMoviesController
     {
         try {
             const movieGeres = await Movie
-            .find({'genres[*]': req.body.genres})
+            .find({'genres': req.body.genres})
 
             return res.status(201).json({
                 success : true,

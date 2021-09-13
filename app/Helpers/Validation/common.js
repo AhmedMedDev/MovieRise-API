@@ -9,13 +9,21 @@ module.exports = {
              data.files.img.mimetype == "image/gif"  )) 
         : true
     },
-    optionalvideo (dataFiles, dataFilesName)
+    optionalVideo (dataFiles, dataFilesName)
     {
         return (dataFiles) 
         ? (dataFilesName && 
             (dataFilesName.mimetype == "video/mp4" || 
              dataFilesName.mimetype == "video/Wmv"  )) 
         : true
+    },
+    video (dataFiles, dataFilesName)
+    {
+        return (dataFiles) 
+        ? (dataFilesName && 
+            (dataFilesName.mimetype == "video/mp4" || 
+             dataFilesName.mimetype == "video/Wmv"  )) 
+        : false
     },
     image (dataFiles, dataFilesName)
     {

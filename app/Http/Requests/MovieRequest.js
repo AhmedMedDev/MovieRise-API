@@ -11,6 +11,10 @@ class MovieRequest
             .withMessage('Must be not Empty')
             .isLength({ min: 3 })
             .withMessage('Must be at least 3 chars long'),
+            // trail roles // file-> viedo 
+            body('film')
+            .custom ((value , {req}) => optionalVideo (req.files, req.files.trail))
+            .withMessage('must be an video with MP4 , MOV , WMV'),
             // synpsis roles
             body('synpsis')
             .notEmpty()
@@ -23,7 +27,7 @@ class MovieRequest
             .withMessage('Must be Numeric'),
             // trail roles // file-> viedo 
             body('trail')
-            .custom ((value , {req}) => optionalvideo (req.files, req.files.trail))
+            .custom ((value , {req}) => video (req.files, req.files.trail))
             .withMessage('must be an video with MP4 , MOV , WMV'),
             // poster roles
             body('poster') // file-> image 

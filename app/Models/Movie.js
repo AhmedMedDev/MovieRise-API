@@ -8,7 +8,8 @@ const movieSchema = new mongoose.Schema({
     },
     film: {
         type: String,
-        default: ''
+        default: '',
+        max: 150
     },
     synpsis: {
         type: String,

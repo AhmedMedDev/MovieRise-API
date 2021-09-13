@@ -1,5 +1,5 @@
 const { body } = require('express-validator');
-const { image, optionalvideo } = require('../../Helpers/Validation/common');
+const { image, optionalVideo } = require('../../Helpers/Validation/common');
 
 class MovieRequest
 {

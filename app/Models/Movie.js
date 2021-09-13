@@ -8,14 +8,14 @@ const movieSchema = new mongoose.Schema({
     },
     film: {
         type: String,
-        default: '',
+        default: 'uploads/movies/film/comming-soon.png',
         max: 150
     },
     synpsis: {
         type: String,
         required: true
     },
-    rate: { // Turn into Dynamic
+    rate: {
         type: Number,
         required: true,
         min: 1,

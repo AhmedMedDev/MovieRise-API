@@ -51,6 +51,10 @@ class MovieController
 
             req.body.trail = `uploads/movies/trail/${saveFile('movies/trail', req.files.trail)}`
 
+            if (req.files.film)
+                req.body.film 
+                = `uploads/movies/film/${saveFile('movies/film', req.files.film)}`
+
             let movie = await Movie.create(req.body);
 
             // Inject Observer 

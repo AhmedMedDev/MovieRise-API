@@ -49,7 +49,7 @@ class MovieController
         try {
             req.body.poster = `uploads/movies/poster/${saveFile('movies/poster', req.files.poster)}`
 
-            req.body.trail = `uploads/movies/trail/${saveFile('movies/trail', req.files.trail)}`
+            req.body.trailer = `uploads/movies/trailer/${saveFile('movies/trailer', req.files.trailer)}`
 
             if (req.files.film)
                 req.body.film 

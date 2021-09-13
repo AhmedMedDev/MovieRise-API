@@ -1,4 +1,5 @@
 const { body } = require('express-validator');
+const { image, optionalvideo } = require('../../Helpers/Validation/common');
 
 class MovieRequest
 {
@@ -7,52 +8,52 @@ class MovieRequest
             // name roles
             body('name')
             .notEmpty()
-            .withMessage('must be not Empty')
+            .withMessage('Must be not Empty')
             .isLength({ min: 3 })
-            .withMessage('must be at least 3 chars long'),
+            .withMessage('Must be at least 3 chars long'),
             // synpsis roles
             body('synpsis')
             .notEmpty()
-            .withMessage('must be not Empty'),
+            .withMessage('Must be not Empty'),
             // rate roles
             body('rate')
             .notEmpty()
-            .withMessage('must be not Empty')
+            .withMessage('Must be not Empty')
             .isNumeric()
-            .withMessage('must be Numeric'),
+            .withMessage('Must be Numeric'),
             // trail roles // file-> viedo 
             body('trail')
-            .notEmpty()
-            .withMessage('must be not Empty'),
+            .custom ((value , {req}) => optionalvideo (req.files, req.files.trail))
+            .withMessage('must be an video with MP4 , MOV , WMV'),
             // poster roles
             body('poster') // file-> image 
-            .notEmpty()
-            .withMessage('must be not Empty'),
+            .custom ((value , {req}) => image (req.files, req.files.poster))
+            .withMessage('must be an image with jpeg , png , gif'),
             // available roles
             body('available') 
             .notEmpty()
-            .withMessage('must be not Empty')
+            .withMessage('Must be not Empty')
             .isBoolean()
-            .withMessage('must be Boolean'),
+            .withMessage('Must be Boolean'),
             // genres roles
             body('genres')
             .notEmpty()
-            .withMessage('must be not Empty')
+            .withMessage('Must be not Empty')
             .isArray()
-            .withMessage('must be Array'),
+            .withMessage('Must be Array'),
             // genre's elems roles
             body('genres.*')
             .isString()
-            .withMessage('must be String'),
+            .withMessage('Must be String'),
             // genre's elems roles
             body('header')
             .optional()
             .isBoolean()
-            .withMessage('must be Boolean'),
+            .withMessage('Must be Boolean'),
             // genre's elems roles
             body('runtime')
             .isString()
-            .withMessage('must be String')
+            .withMessage('Must be String')
             
         ]
     }

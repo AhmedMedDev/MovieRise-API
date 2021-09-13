@@ -6,6 +6,10 @@ const movieSchema = new mongoose.Schema({
         required: true,
         max: 150
     },
+    film: {
+        type: String,
+        default: ''
+    },
     synpsis: {
         type: String,
         required: true

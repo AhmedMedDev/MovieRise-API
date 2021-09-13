@@ -3,6 +3,7 @@ const Movie = require("../../../Models/Movie");
 const Cache = require("../../../../config/cache");
 const MovieObserver = require("../../../Observers/MovieObserver");
 const MovieServiceProvider = require("../../../Providers/MovieServiceProvider");
+const { saveFile } = require("../../../Helpers/Fileupload");
 
 class MovieController
 {
@@ -46,6 +47,10 @@ class MovieController
     async store (req, res)
     {
         try {
+            req.body.poster = `uploads/movies/poster/${saveFile('movies/poster', req.files.poster)}`
+
+            req.body.trail = `uploads/movies/trail/${saveFile('movies/trail', req.files.trail)}`
+
             let movie = await Movie.create(req.body);
 
             // Inject Observer 

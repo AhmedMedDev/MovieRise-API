@@ -11,7 +11,7 @@ class MovieRequest
             .withMessage('Must be not Empty')
             .isLength({ min: 3 })
             .withMessage('Must be at least 3 chars long'),
-            // trail roles // file-> viedo 
+            // film roles // file-> viedo 
             body('film')
             .custom ((value , {req}) => optionalVideo (req.files, req.files.trail))
             .withMessage('must be an video with MP4 , MOV , WMV'),
